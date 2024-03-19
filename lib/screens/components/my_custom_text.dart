@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget MyCustomTextWithTitleAndDescription(String title, String value) {
+Widget MyCustomTextWithTitleAndDescription(String title, String value, {required int fontSize}) {
   return RichText(
     text: TextSpan(
       children: <TextSpan>[

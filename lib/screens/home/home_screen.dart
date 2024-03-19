@@ -34,16 +34,18 @@ Future<ModelUser> getUsername() async {
 Future<ModelUnidadeEmpresarial> getUnidadeEmpresarial() async {
   SharedPreferences sp = await SharedPreferences.getInstance();
   String? unidade_db = sp.getString("unidade");
-  ModelUnidadeEmpresarial unidade = ModelUnidadeEmpresarial.fromJson(jsonDecode(unidade_db!));
+  ModelUnidadeEmpresarial unidade =
+      ModelUnidadeEmpresarial.fromJson(jsonDecode(unidade_db!));
   return unidade;
 }
 
 Future<Uint8List> fetchLogo() async {
-
   final String basicAuth =
       'Basic ' + base64Encode(utf8.encode('hjsystems:11032011'));
 
-  final response = await http.get(Uri.parse('http://hjsystems.dynns.com:8085/getLogo'), headers: {'Authorization': basicAuth});
+  final response = await http.get(
+      Uri.parse('http://hjsystems.dynns.com:8085/getLogo'),
+      headers: {'Authorization': basicAuth});
 
   if (response.statusCode == 200) {
     return response.bodyBytes;
@@ -53,7 +55,6 @@ Future<Uint8List> fetchLogo() async {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int _currentIndex = 0;
   PageController _pageController = PageController();
   ModelUser? user;
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getUserdata() async {
     loadingData = true;
-    getUsername().then((value){
+    getUsername().then((value) {
       setState(() {
         user = value;
         loadingData = false;
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getUnidadeData() async {
     loadingUnidade = true;
-    getUnidadeEmpresarial().then((value){
+    getUnidadeEmpresarial().then((value) {
       setState(() {
         unidadeEmpresarial = value;
         loadingUnidade = false;
@@ -115,7 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
-        children: const <Widget>[WelcomeScreen(), PedidosScreen(), AdicionarScreen()],
+        children: const <Widget>[
+          WelcomeScreen(),
+          PedidosScreen(),
+          AdicionarScreen()
+        ],
         onPageChanged: (index) {
           setState(() => _currentIndex = index);
         },
@@ -123,7 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
-        title: loadingUnidade ? const Text("") : Text(unidadeEmpresarial!.unemFantasia!),
+        title: loadingUnidade
+            ? const Text("")
+            : Text(unidadeEmpresarial!.unemFantasia!),
         titleTextStyle: TextStyle(
           color: Colors.white,
         ),
@@ -132,7 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             DrawerHeader(
-              
               decoration: const BoxDecoration(
                 color: Colors.black,
               ),
@@ -142,9 +148,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
-                      const Text("Olá,", style: TextStyle(color: Colors.white),),
-                      loadingData ? const CircularProgressIndicator(): Text(user!.usrsNomeLogin!, style: const TextStyle(color: Colors.white),)
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            "Olá,  ",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          
+                          loadingData
+                              ? const CircularProgressIndicator()
+                              : Row(
+                                  children: [
+                                    Text(
+                                      user!.usrsNomeLogin!,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    const Icon(Icons.waving_hand,
+                                        color: Color.fromARGB(255, 225, 233, 5)),
+                                  ],
+                                )
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -189,6 +215,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushNamed(context, RouterNames.produtos);
               },
             ),
+            Expanded(child: Container()),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Configurações'),
@@ -196,10 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushNamed(context, RouterNames.settings);
               },
             ),
-            Expanded(child: Container()),
-
-            const SizedBox(height: 20,),
-            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -223,7 +247,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       CircularProgressIndicator(),
                                       Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: Text("Estamos desconetando sua conta, por favor, aguarde."),
+                                        child: Text(
+                                            "Estamos desconetando sua conta, por favor, aguarde."),
                                       )
                                     ],
                                   ),
@@ -235,18 +260,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                       Future.delayed(const Duration(seconds: 2), () async {
                         Navigator.of(context).pop();
-                        SharedPreferences sp = await SharedPreferences.getInstance();
+                        SharedPreferences sp =
+                            await SharedPreferences.getInstance();
                         sp.clear();
                         Navigator.of(context).pop();
                         Navigator.popAndPushNamed(context, RouterNames.auth);
                       });
                     },
-                    child: const Text("Sair", style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        border: Border.all(
+                            color: Colors
+                                .red), // Definindo a cor do border igual à cor de fundo para torná-lo invisível
+                        borderRadius: const BorderRadius.all(Radius.circular(
+                            4.0)), // Adicionando um borderRadius
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.all(8.0), // Definindo o padding desejado
+                        child: Text(
+                          "Desconectar",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20,)
+            const SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
@@ -265,13 +311,15 @@ class _HomeScreenState extends State<HomeScreen> {
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: const Icon(Icons.home),
-            title:  Text(AppTexts.textHomeNavbar,),
+            title: Text(
+              AppTexts.textHomeNavbar,
+            ),
             activeColor: Colors.grey[200]!,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.list),
-            title:  Text(AppTexts.textPedidosNavbar),
+            title: Text(AppTexts.textPedidosNavbar),
             activeColor: Colors.grey[200]!,
             textAlign: TextAlign.center,
           ),
