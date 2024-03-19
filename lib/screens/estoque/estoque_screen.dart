@@ -163,13 +163,9 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Ajuste de Estoque",
-        style: TextStyle(
-          color: Colors.white,
-        ),),
+        title: const Text("Ajuste de Estoque"),
         actions: [
           IconButton(
-            color: Colors.white,
             icon: const Icon(Icons.save),
             onPressed: () {
 
@@ -250,77 +246,64 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
             ),
             buildUserInfoEditField(
                 newSaldoController, 'Saldo atual', TextInputType.number, true),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(onPressed: (){
-                    if (nameController.text.isNotEmpty &&
-                        undController.text.isNotEmpty &&
-                        saldoController.text.isNotEmpty &&
-                        newSaldoController.text.isNotEmpty) {
-                      setState(() {
-                        if(!itemExists(ModelEstoqueItem(pRODCODIGO: _productCodeSearchValue), itemList)) {
-                          itemList.add(ModelEstoqueItem(pRODNOME: nameController.text, uNIDSIGLA: undController.text, sESTQTDSALDO: int.parse(saldoController.text), pRODCODIGO: _productCodeSearchValue));
-                          updateList.add(ModelAjusteEstoqueItem(
-                            testId: atualModelEstoqueItem.tESTID,
-                            newSaldo: newSaldoController.text,
-                            prodId: atualModelEstoqueItem.pRODID,
-                            saldo: saldoController.text,
-                            unemId: unidadeEmpresarial?.unemId!,
-                            usrsId: usuario?.usrsID,
-                          ));
-                        } else {
-                          buildAlert(context, "Só é possivel adicionar um item com o mesmo código.");
-                        }
-              
-                      });
-                    } else {
-                      buildAlert(context, "Por favor, preencha o novo valor.");
-                    }
-                  }, child: const Text("ADICIONAR",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),), style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                     // Define a cor do botão aqui
-                  ),),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(onPressed: (){
+                  if (nameController.text.isNotEmpty &&
+                      undController.text.isNotEmpty &&
+                      saldoController.text.isNotEmpty &&
+                      newSaldoController.text.isNotEmpty) {
+                    setState(() {
+                      if(!itemExists(ModelEstoqueItem(pRODCODIGO: _productCodeSearchValue), itemList)) {
+                        itemList.add(ModelEstoqueItem(pRODNOME: nameController.text, uNIDSIGLA: undController.text, sESTQTDSALDO: int.parse(saldoController.text), pRODCODIGO: _productCodeSearchValue));
+                        updateList.add(ModelAjusteEstoqueItem(
+                          testId: atualModelEstoqueItem.tESTID,
+                          newSaldo: newSaldoController.text,
+                          prodId: atualModelEstoqueItem.pRODID,
+                          saldo: saldoController.text,
+                          unemId: unidadeEmpresarial?.unemId!,
+                          usrsId: usuario?.usrsID,
+                        ));
+                      } else {
+                        buildAlert(context, "Só é possivel adicionar um item com o mesmo código.");
+                      }
+
+                    });
+                  } else {
+                    buildAlert(context, "Por favor, preencha o novo valor.");
+                  }
+                }, child: const Text("ADICIONAR"), style: ElevatedButton.styleFrom(
+                   // Define a cor do botão aqui
+                ),),
+              ],
             ),
             Expanded(
-              child: SizedBox(
-                height: 200,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.black,
-                      )
-                    ),
-                  ),
-                  child: ListView.builder(
-                    itemCount: itemList.length,
-                    itemBuilder: (context, index) {
-                      ModelEstoqueItem item = itemList[index];
-                      ModelAjusteEstoqueItem itemAjuste = updateList[index];
-                      return ListTile(
-                        title: Text(item.pRODNOME!),
-                        subtitle: Text('Und: ${item.uNIDSIGLA}, Saldo: ${item.sESTQTDSALDO}, Novo Saldo:  ${itemAjuste.newSaldo}'),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              itemList.removeAt(index);
-                              updateList.removeAt(index);
-                            });
-                          },
-                        ),
-                      );
-                    },
-                  ),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: ListView.builder(
+                  itemCount: itemList.length,
+                  itemBuilder: (context, index) {
+                    ModelEstoqueItem item = itemList[index];
+                    ModelAjusteEstoqueItem itemAjuste = updateList[index];
+                    return ListTile(
+                      title: Text(item.pRODNOME!),
+                      subtitle: Text('Und: ${item.uNIDSIGLA}, Saldo: ${item.sESTQTDSALDO}, Novo Saldo:  ${itemAjuste.newSaldo}'),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          setState(() {
+                            itemList.removeAt(index);
+                            updateList.removeAt(index);
+                          });
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
