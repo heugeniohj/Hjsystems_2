@@ -163,7 +163,8 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Ajuste de Estoque"),
+        title: const Text("Ajuste de Estoque",
+        style: TextStyle(color: Colors.white),),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -182,7 +183,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(40),
         child: Column(
           children: [
             TextField(
@@ -274,6 +275,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
                     buildAlert(context, "Por favor, preencha o novo valor.");
                   }
                 }, child: const Text("ADICIONAR"), style: ElevatedButton.styleFrom(
+                  
                    // Define a cor do botão aqui
                 ),),
               ],
@@ -281,10 +283,6 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey),
-                ),
                 child: ListView.builder(
                   itemCount: itemList.length,
                   itemBuilder: (context, index) {

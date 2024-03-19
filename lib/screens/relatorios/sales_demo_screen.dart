@@ -30,12 +30,12 @@ Future<ModelUnidadeEmpresarial> fetchUnidadeEmpresarial() async {
   SharedPreferences sp = await SharedPreferences.getInstance();
   String? unidade = sp.getString("unidade");
   ModelUnidadeEmpresarial unidadeSelecionada =
-  ModelUnidadeEmpresarial.fromJson(jsonDecode(unidade!));
+      ModelUnidadeEmpresarial.fromJson(jsonDecode(unidade!));
   return unidadeSelecionada;
 }
 
-Future<List<ModelSalesDemo>> getSalesList(String unemId, String dtInicial, String dtFinal) async {
-
+Future<List<ModelSalesDemo>> getSalesList(
+    String unemId, String dtInicial, String dtFinal) async {
   final String urlBase = await getBaseUrl();
 
   final String basicAuth =
@@ -102,7 +102,8 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
         isLoading = true;
         salesList = null;
       });
-      _getSalesList(unidadeEmpresarial!.unemId!, _startDate.toString(), _endDate.toString());
+      _getSalesList(unidadeEmpresarial!.unemId!, _startDate.toString(),
+          _endDate.toString());
     } else {
       buildAlert(context, "Por favor, preencha todos os campos.");
     }
@@ -121,10 +122,12 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Demonstrativo de vendas",
-        style: TextStyle(
-          color: Colors.white,
-        ),),
+        title: const Text(
+          "Demonstrativo de vendas",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -132,27 +135,44 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildDateField(context, 'Data Inicial', _startDate, true),
-                    _buildDateField(context, 'Data Final', _endDate, false),
-                   
-                  ],
-                  
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildDateField(
+                          context, 'Data Inicial', _startDate, true),
+                      SizedBox(width: 16.0),
+                      _buildDateField(context, 'Data Final', _endDate, false),
+                    ],
+                  ),
                 ),
-                 ElevatedButton(
-                      onPressed: () {
-                        _onSubmit();
-                      },
-                      child: const Text(''),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _onSubmit();
+                          },
+                          child: const Text('Pesquisar'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          isLoading ? const Center(
-            child: CircularProgressIndicator(),
-          ) : (salesList == null) ? Container() : buildSalesView(salesList)
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : (salesList == null)
+                  ? Container()
+                  : buildSalesView(salesList)
         ],
       ),
     );
@@ -162,78 +182,110 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Quantidade',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  calculateTotalItens(data!),
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 40, width: 1, child: Container(color: Colors.black,),),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Total de Vendas',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  calculateTotalSales(data!),
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 40, width: 1, child: Container(color: Colors.black,),),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Valor Líquido',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  calculateTotalDev(data!),
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          ],
-        )
-      )
-      ),
+        Card(
+            elevation: 4,
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Quantidade',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          calculateTotalItens(data!),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 1,
+                      child: Container(
+                        color: Colors.black,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Total de Vendas',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          calculateTotalSales(data!),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 1,
+                      child: Container(
+                        color: Colors.black,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Valor Líquido',
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          calculateTotalDev(data!),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ],
+                ))),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: DataTable(
             columns: const [
-               DataColumn(label: Text('Nome',)),
-               DataColumn(label: Text('Quantidade')),
-               DataColumn(label: Text('Valor')),
+              DataColumn(
+                  label: Text(
+                'Nome',
+              )),
+              DataColumn(label: Text('Quantidade')),
+              DataColumn(label: Text('Valor')),
             ],
-            rows: data.map(
+            rows: data
+                .map(
                   (data) => DataRow(
-                cells: [
-                  DataCell(Text(data.gRUPO!, style: const TextStyle(fontSize: 12),)),
-                  DataCell(Text(data.iTFTQTDEFATURADA!, style: const TextStyle(fontSize: 12), overflow: TextOverflow.fade,)),
-                  DataCell(Text(data.iTFTVLRCONTABIL!, style: const TextStyle(fontSize: 12), overflow: TextOverflow.fade,)),
-                ],
-              ),
-            ).toList(),
+                    cells: [
+                      DataCell(Text(
+                        data.gRUPO!,
+                        style: const TextStyle(fontSize: 12),
+                      )),
+                      DataCell(Text(
+                        data.iTFTQTDEFATURADA!,
+                        style: const TextStyle(fontSize: 12),
+                        overflow: TextOverflow.fade,
+                      )),
+                      DataCell(Text(
+                        data.iTFTVLRCONTABIL!,
+                        style: const TextStyle(fontSize: 12),
+                        overflow: TextOverflow.fade,
+                      )),
+                    ],
+                  ),
+                )
+                .toList(),
           ),
         ),
       ],
@@ -244,12 +296,14 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     double totalVlrContabil = 0.0;
 
     for (ModelSalesDemo item in salesData) {
-      double vlrContabil = double.tryParse(item.iTFTVLRCONTABIL ?? '0.0') ?? 0.0;
+      double vlrContabil =
+          double.tryParse(item.iTFTVLRCONTABIL ?? '0.0') ?? 0.0;
 
       totalVlrContabil += vlrContabil;
     }
 
-    final currencyFormat = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$', decimalDigits: 0);
+    final currencyFormat =
+        NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$', decimalDigits: 0);
 
     return currencyFormat.format(totalVlrContabil);
   }
@@ -259,7 +313,8 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     double totalVlrDev = 0.0;
 
     for (ModelSalesDemo item in salesData) {
-      double vlrContabil = double.tryParse(item.iTFTVLRCONTABIL ?? '0.0') ?? 0.0;
+      double vlrContabil =
+          double.tryParse(item.iTFTVLRCONTABIL ?? '0.0') ?? 0.0;
       double vlrDev = double.tryParse(item.vLRDEV ?? '0.0') ?? 0.0;
 
       totalVlrContabil += vlrContabil;
@@ -268,7 +323,8 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
 
     double totalResult = totalVlrContabil - totalVlrDev;
 
-    final currencyFormat = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$', decimalDigits: 0);
+    final currencyFormat =
+        NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$', decimalDigits: 0);
 
     return currencyFormat.format(totalResult);
   }
@@ -279,7 +335,7 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     for (ModelSalesDemo item in salesData) {
       int? vlrDev = int.tryParse(item.dCFSQTD!);
 
-     totalItens += vlrDev!;
+      totalItens += vlrDev!;
     }
 
     return totalItens.toString();
@@ -290,6 +346,7 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
     return InkWell(
       onTap: () => _selectDate(context, isStartDate),
       child: Container(
+        width: 200,
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -308,20 +365,20 @@ class _SalesDemoScreenState extends State<SalesDemoScreen> {
   }
 
   void buildAlert(BuildContext context, String message) {
-    showDialog(context: context, builder: (BuildContext context) {
-      return AlertDialog(
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("OK"),
-          ),
-        ],
-      );
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        });
   }
-
-
 }

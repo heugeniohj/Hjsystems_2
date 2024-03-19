@@ -96,7 +96,10 @@ class _OrdemServicoScreenState extends State<OrdemServicoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ordem de Serviço"),
+        title: Text("Ordem de Serviço",
+        style: TextStyle(
+          color: Colors.white,
+        ),),
         backgroundColor: Colors.black,
       ),
       floatingActionButton: FloatingActionButton(
