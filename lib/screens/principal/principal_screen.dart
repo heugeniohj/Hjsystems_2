@@ -83,34 +83,39 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Produtos"),
+        title: const Text(""),
       ),
       body: ChangeNotifierProvider<PrincipalViewModel>(
-          create: (BuildContext context) => viewModel,
-          child: Consumer<PrincipalViewModel>(builder: (context, viewModel, _) {
+        create: (BuildContext context) => viewModel,
+        child: Consumer<PrincipalViewModel>(
+          builder: (context, viewModel, _) {
             switch (viewModel.estoqueResponse.status) {
               case Status.LOADING:
                 return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Aguarde, carregando base de dados..."),
-                    )
-                  ],
-                ));
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Aguarde, carregando base de dados..."),
+                      )
+                    ],
+                  ),
+                );
               case Status.ERROR:
                 return const Text("erro");
               case Status.COMPLETED:
                 return Container(
-                    padding: const EdgeInsets.all(8),
-                    child: buildCategoriesView(viewModel.estoqueResponse.data));
+                  padding: const EdgeInsets.all(8),
+                  child: buildCategoriesView(viewModel.estoqueResponse.data),
+                );
               default:
                 return const Text("erro");
             }
-          })),
+          },
+        ),
+      ),
       endDrawer: buildEndDrawer(),
     );
   }
@@ -132,8 +137,9 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 24.0, vertical: 15.0),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.circular(4)),
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
                 child: DropdownButton<ModelGrupos>(
                   elevation: 16,
                   hint: Text("Grupo"),
@@ -142,7 +148,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                   isDense: true,
                   value: grupoSelected,
                   underline: const SizedBox(),
-                  style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                   onChanged: (ModelGrupos? value) {
                     setState(() {
                       grupoSelected = value!;
@@ -165,9 +171,6 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 25.0, vertical: 15.0),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.circular(4)),
                 child: DropdownButton<ModelMarcas>(
                   elevation: 16,
                   hint: Text("Marca"),
@@ -176,7 +179,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                   isDense: true,
                   value: marcaSelected,
                   underline: const SizedBox(),
-                  style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                   onChanged: (ModelMarcas? value) {
                     setState(() {
                       marcaSelected = value!;
@@ -202,31 +205,42 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(const Color.fromARGB(255, 255, 255, 255)),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 255, 255, 255),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          grupoSelected = null;
-                          marcaSelected = null;
-                          viewModel.getEstoqueFilianList(
-                              unidadeEmpresarial!.emprId!, "", "");
-                        });
-                      },
-                      child: const Text("Limpar filtro")),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                      ),
-                      onPressed: () {
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        grupoSelected = null;
+                        marcaSelected = null;
                         viewModel.getEstoqueFilianList(
-                            unidadeEmpresarial!.emprId!,
-                            grupoSelected?.grpoId,
-                            marcaSelected?.marcId);
-                      },
-                      child: const Text("Aplicar")),
+                          unidadeEmpresarial!.emprId!,
+                          "",
+                          "",
+                        );
+                      });
+                    },
+                    child: const Text("Limpar filtro"),
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      viewModel.getEstoqueFilianList(
+                        unidadeEmpresarial!.emprId!,
+                        grupoSelected?.grpoId,
+                        marcaSelected?.marcId,
+                      );
+                    },
+                    child: const Text(
+                      "Aplicar",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -234,42 +248,6 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
         ),
       ),
     );
-  }
-
-  String getValueForUnidadeEmpresarial(
-      String unidadeEmpresarial, ModelEstoque data) {
-    switch (unidadeEmpresarial) {
-      case 'g01':
-        return data.g01!;
-      case 'g02':
-        return data.g02!;
-      case 'g03':
-        return data.g03!;
-      case 'g04':
-        return data.g04!;
-      case 'g05':
-        return data.g05!;
-      case 'g06':
-        return data.g06!;
-      case 'g07':
-        return data.g07!;
-      case 'g08':
-        return data.g08!;
-      case 'g09':
-        return data.g09!;
-      case 'g10':
-        return data.g10!;
-      case 'g11':
-        return data.g11!;
-      case 'go':
-        return data.gO!;
-      case 'df':
-        return data.dF!;
-      case 'geral':
-        return data.geral!;
-      default:
-        return "";
-    }
   }
 
   buildCategoriesView(List<ModelEstoque>? data) {
@@ -300,6 +278,59 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
             ],
           ),
         ),
+        SliverToBoxAdapter(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(),
+            ),
+            child: const Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       SizedBox(width: 19),
+                      Text("G01"),
+                    SizedBox(width: 19),
+                      Text("G02"),
+                        SizedBox(width: 19),
+                      Text("G03"),
+                    SizedBox(width: 19),
+                      Text("G04"),
+                      SizedBox(width: 19),
+                      Text("G08"),
+                       SizedBox(width: 19),
+                      Text("GO"),
+                        SizedBox(width: 19),
+                      Text("G05"),
+                       SizedBox(width: 19),
+                      Text("G11"),
+                        SizedBox(width: 19),
+                        Text("G06"),
+                        SizedBox(width: 19),
+                        Text("G07"),
+                        SizedBox(width: 19),
+                        Text("G09"),
+                        SizedBox(width: 19),
+                        Text("G10"),
+                       SizedBox(width: 19),
+                        Text("DF"),
+                       SizedBox(width: 20),
+                        Text("Geral",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),),
+                       SizedBox(width: 20),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         _filteredProducts.isEmpty
             ? const SliverFillRemaining(
                 child: Center(
@@ -311,6 +342,8 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
     );
   }
 
+  //Texto aqui nesse local
+
   SliverList buildProductsList(List<ModelEstoque> filteredProducts) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -320,39 +353,62 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ViewProductScreen(
+                  builder: (context) => PrincipalProductViewScreen(
                     product: filteredProducts[index],
                   ),
                 ),
               );
             },
-            child: Card(
-              elevation: 2,
+            child: Container(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: Text(filteredProducts[index].nome!)),
+                        SizedBox(width: 20),
+                        buildColumnText("", filteredProducts[index].g01!),
+                        SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g02!),
+                      SizedBox(width: 40),
+                        buildColumnText("", filteredProducts[index].g03!),
+                      SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g04!),
+                        SizedBox(width: 40),
+                        buildColumnText("", filteredProducts[index].g08!),
+                        SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].gO!),
+                        SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g11!),
+                        SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g05!),
+                        SizedBox(width: 40),
+                        buildColumnText("", filteredProducts[index].g06!),
+                         SizedBox(width: 40),
+                        buildColumnText("", filteredProducts[index].g07!),
+                         SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g09!),
+                         SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].g10!),
+                        SizedBox(width: 35),
+                        buildColumnText("", filteredProducts[index].dF!),
+                        SizedBox(width: 35),
+                        buildColumnText(
+                          "",
+                          filteredProducts[index].geral!,
+                        ),
+                        SizedBox(width: 30),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                    Text(
+                      "Código: ${filteredProducts[index].codigo!}",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MyCustomTextWithTitleAndDescription(
-                            "Código: ", filteredProducts[index].codigo!),
-                        MyCustomTextWithTitleAndDescription(
-                            "${unidadeEmpresarial!.unemSigla!}: ",
-                            getValueForUnidadeEmpresarial(
-                                unidadeEmpresarial!.unemSigla!.toLowerCase(),
-                                filteredProducts[index])),
-                      ],
-                    )
+                    Text("Nome: ${filteredProducts[index].nome!}"),
+                    const Divider(),
                   ],
                 ),
               ),
@@ -361,6 +417,118 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
         },
         childCount: filteredProducts.length,
       ),
+    );
+  }
+
+  Column buildColumnText(String header, String value) {
+    return Column(
+      children: [
+        Text(
+          header,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text(value),
+      ],
+    );
+  }
+}
+
+class PrincipalProductViewScreen extends StatefulWidget {
+  final ModelEstoque product;
+
+  const PrincipalProductViewScreen({Key? key, required this.product})
+      : super(key: key);
+
+  @override
+  _PrincipalProductViewScreenState createState() =>
+      _PrincipalProductViewScreenState();
+}
+
+class _PrincipalProductViewScreenState
+    extends State<PrincipalProductViewScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.product.nome!),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildInfoItem('Código: ', widget.product.codigo!),
+              buildInfoItem('Nome: ', widget.product.nome!),
+              buildInfoItem('Referência: ', widget.product.referencia!),
+              const Divider(),
+              Wrap(
+                spacing: 10.0,
+                runSpacing: 10.0,
+                children: [
+                  buildInfoItemWithoutSpace('G01: ', widget.product.g01!),
+                  buildInfoItemWithoutSpace('G02: ', widget.product.g02!),
+                  buildInfoItemWithoutSpace('G03: ', widget.product.g03!),
+                  buildInfoItemWithoutSpace('G04: ', widget.product.g04!),
+                  buildInfoItemWithoutSpace('G08: ', widget.product.g08!),
+                  buildInfoItemWithoutSpace('GO: ', widget.product.gO!),
+                  buildInfoItemWithoutSpace('G11: ', widget.product.g11!),
+                  buildInfoItemWithoutSpace('G05: ', widget.product.g05!),
+                  buildInfoItemWithoutSpace('G06: ', widget.product.g06!),
+                  buildInfoItemWithoutSpace('G07: ', widget.product.g07!),
+                  buildInfoItemWithoutSpace('G09: ', widget.product.g09!),
+                  buildInfoItemWithoutSpace('G10: ', widget.product.g10!),
+                  buildInfoItemWithoutSpace('DF: ', widget.product.dF!),
+                  buildInfoItemWithoutSpace('Geral: ', widget.product.geral!),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildInfoItemWithoutSpace(String label, String value) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 2.5,
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildInfoItem(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        Flexible(
+          child: Text(
+            value,
+            style: const TextStyle(fontSize: 20),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

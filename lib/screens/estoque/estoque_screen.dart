@@ -171,7 +171,7 @@ class _EstoqueScreenState extends State<EstoqueScreen> {
             onPressed: () {
 
               if(updateList.isEmpty) {
-                buildAlert(context, "Adicione ao menos um item.");
+                buildAlert(context, "Nem um Item foi adicionado");
               } else {
                 showLoadingComponent(context, "Aguarde, enviando dados...");
                 postAjusteEstoque(context, updateList);
