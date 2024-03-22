@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hjsystems/api/models/model_estoque.dart';
 import 'package:hjsystems/api/models/model_grupos.dart';
 import 'package:hjsystems/api/models/model_marcas.dart';
@@ -280,9 +281,6 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
         ),
         SliverToBoxAdapter(
           child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
             child: const Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -341,13 +339,13 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
       ],
     );
   }
-
-  //Texto aqui nesse local
-
+  
   SliverList buildProductsList(List<ModelEstoque> filteredProducts) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
+          final backgroundColor = 
+          index % 2 == 0 ? Color.fromARGB(255, 249, 248, 248) : Color(0xfef7ff);
           return InkWell(
             onTap: () {
               Navigator.push(
@@ -360,6 +358,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
               );
             },
             child: Container(
+              color: backgroundColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -479,7 +478,7 @@ class _PrincipalProductViewScreenState
                   buildInfoItemWithoutSpace('G09: ', widget.product.g09!),
                   buildInfoItemWithoutSpace('G10: ', widget.product.g10!),
                   buildInfoItemWithoutSpace('DF: ', widget.product.dF!),
-                  buildInfoItemWithoutSpace('Geral: ', widget.product.geral!),
+                  buildInfoItemWithoutSpace('Geral: ', widget.product.geral!,),
                 ],
               ),
             ],

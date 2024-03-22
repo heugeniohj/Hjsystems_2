@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<String> getBaseUrl() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String key = "hj_system_url_base";
-    String defaultValue = "http://hjsystems.dynns.com:8085";
+    String defaultValue = "https://hjsystems.dynns.com:8085";
 
     if (sharedPreferences.containsKey(key)) {
       return sharedPreferences.getString(key) ?? defaultValue;

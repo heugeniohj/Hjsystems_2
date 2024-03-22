@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/models/model_grupos.dart';
 import '../../api/models/model_marcas.dart';
+
 import '../../apptexts.dart';
 import '../../route/router_name.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +45,7 @@ Future<Uint8List> fetchLogo() async {
       'Basic ' + base64Encode(utf8.encode('hjsystems:11032011'));
 
   final response = await http.get(
-      Uri.parse('http://hjsystems.dynns.com:8085/getLogo'),
+      Uri.parse('https://3.214.255.198:8085/getLogo'),
       headers: {'Authorization': basicAuth});
 
   if (response.statusCode == 200) {
