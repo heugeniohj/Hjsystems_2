@@ -15,9 +15,8 @@
     the `--base-href` argument provided to `flutter build`.
   -->
   <base href="/">
-
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
@@ -54,6 +53,10 @@
         }
       });
     });
+
+    fetch('http://URL', {
+      referrerPolicy: 'unsafe_url'
+    })
   </script>
 </body>
 </html>
