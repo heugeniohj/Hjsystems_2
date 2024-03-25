@@ -45,7 +45,7 @@ Future<Uint8List> fetchLogo() async {
       'Basic ' + base64Encode(utf8.encode('hjsystems:11032011'));
 
   final response = await http.get(
-      Uri.parse('https://3.214.255.198:8085/getLogo'),
+      Uri.parse('http://3.214.255.198:8085/getLogo'),
       headers: {'Authorization': basicAuth});
 
   if (response.statusCode == 200) {

@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     isUserLogged();
-    // getLogo();
+    getLogo();
   }
 
   isUserLogged() async {
@@ -201,19 +201,19 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  // getLogo() async {
-  //   loadingImage = true;
-  //   fetchLogo().then((value) {
-  //     setState(() {
-  //       image = value;
-  //       loadingImage = false;
-  //     });
-  //   }).catchError((onError, stackTrace) {
-  //     setState(() {
-  //       loadingImageError = true;
-  //     });
-  //   });
-  // }
+   getLogo() async {
+     loadingImage = true;
+     fetchLogo().then((value) {
+       setState(() {
+         image = value;
+         loadingImage = false;
+       });
+     }).catchError((onError, stackTrace) {
+       setState(() {
+       loadingImageError = true;
+});
+  });
+  }
 
   login(
       String password, ModelUser user, ModelUnidadeEmpresarial unidade) async {
