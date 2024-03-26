@@ -27506,7 +27506,7 @@ s=!J.t9(q.a,"hj_system_url_base")?3:5
 break
 case 3:A.mT("url base added.")
 s=6
-return A.M(q.oq("String","hj_system_url_base","https://hjsystems.dynns.com:8085"),$async$a3x)
+return A.M(q.oq("String","hj_system_url_base","http://3.214.255.198:8085"),$async$a3x)
 case 6:s=4
 break
 case 5:A.mT("url base exist.")
@@ -27563,9 +27563,9 @@ return A.M(A.d3(),$async$y5)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$y5,r)},
@@ -27721,9 +27721,9 @@ return A.M(A.d3(),$async$a3p)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$a3p,r)},
@@ -27915,9 +27915,9 @@ return A.M(A.d3(),$async$ayU)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$ayU,r)},
@@ -28042,9 +28042,9 @@ return A.M(A.d3(),$async$ayT)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$ayT,r)},
@@ -28115,9 +28115,9 @@ return A.M(A.d3(),$async$ayS)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$ayS,r)},
@@ -28208,9 +28208,9 @@ return A.M(A.d3(),$async$a3o)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"http://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="http://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$a3o,r)},
@@ -95187,9 +95187,9 @@ return A.M(A.d3(),$async$xs)
 case 3:p=b.a
 o=J.cz(p)
 if(o.am(p,"hj_system_url_base")){p=A.bL(o.h(p,"hj_system_url_base"))
-q=p==null?"https://hjsystems.dynns.com:8085":p
+q=p==null?"https://3.214.255.198:8085":p
 s=1
-break}else{q="https://hjsystems.dynns.com:8085"
+break}else{q="https://3.214.255.198:8085"
 s=1
 break}case 1:return A.E(q,r)}})
 return A.F($async$xs,r)},

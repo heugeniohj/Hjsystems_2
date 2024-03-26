@@ -9,7 +9,7 @@ void main() async {
   /* insert url base on app created */
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String key = "hj_system_url_base";
-  String defaultValue = "https://hjsystems.dynns.com:8085";
+  String defaultValue = "http://3.214.255.198:8085";
 
   if (!sharedPreferences.containsKey(key)) {
     print("url base added.");
